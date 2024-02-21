@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <v-app style="background-color: #121212">
     <router-view />
-  </v-container>
+  </v-app>
 </template>
 
 <script>

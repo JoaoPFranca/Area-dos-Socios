@@ -16,6 +16,7 @@ module.exports = {
         "vue"
     ],
     "rules": {
-        "vue/valid-attribute-name": 0
+        "vue/valid-attribute-name": 0,
+        "vue/html-indent": 0
     }
 };
