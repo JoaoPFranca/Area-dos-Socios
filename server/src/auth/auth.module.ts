@@ -6,6 +6,7 @@ import {UserModule} from "../user/user.module";
 import {RolesGuard} from "./guards/roles.guard";
 import {JwtAuthGuard} from "./guards/jwt-guard";
 import {JwtStrategy} from "./guards/jwt-strategy";
+import {PostsModule} from "../posts/posts.module";
 
 @Module({
     imports: [
