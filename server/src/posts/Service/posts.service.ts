@@ -21,19 +21,24 @@ export class PostsService {
     post.texto = createPostDto.texto;
     post.dataPost = new Date();
 
-    const user = await this.userRepository.findOne({where: {id: createPostDto.userId }})
+    const user = await this.userRepository.findOne({where: {email: createPostDto.user}})
 
-    if(!user){
+    if (!user) {
       throw new NotFoundException('User not found.');
     }
 
     post.user = user
 
-    return this.postRepository.save(user)
+    return this.postRepository.save(post)
   }
 
   findAll() {
-    return this.userRepository.find()
+    return this.postRepository
+        .createQueryBuilder('post')
+        .leftJoinAndSelect('post.user', 'user') // Assuming 'user' is the name of the relation in the Post entity
+        .select(['post', 'user.username', 'user.email', /* other user attributes except password */])
+        .orderBy('post.dataPost', 'DESC')
+        .getMany();
   }
 
   findOne(id: number) {

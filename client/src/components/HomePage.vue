@@ -42,6 +42,7 @@ export default {
         const res = await axios.post('http://localhost:3000/api/user/login', {email: this.email, password: this.password});
         let dados = res.data;
         localStorage.setItem('token', dados.access_token);
+        localStorage.setItem('username', this.email)
         this.$router.push('/home');
       } catch (err) {
           await Swal.fire({
