@@ -1,5 +1,6 @@
-import {BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {UserRole} from "./user.interface";
+import {Post} from "../../posts/Model/post.entity";
 
 @Entity("user")
 export class UserEntity {
@@ -25,4 +26,7 @@ export class UserEntity {
     emailToLowerCase(){
         this.email = this.email.toLowerCase();
     }
+
+    @OneToMany(() => Post, post => post.user)
+    posts: Post[];
 }
