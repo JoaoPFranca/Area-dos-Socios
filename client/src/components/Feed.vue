@@ -32,7 +32,7 @@
             {{ post.user.username }}
           </v-card-title>
           <v-card-subtitle>
-            {{ post.titulo }}
+            {{ post.titulo }} - {{ post.dataPost }}
           </v-card-subtitle>
           <v-card-text>
             {{ post.texto }}
@@ -77,6 +77,14 @@ export default {
       try {
         let response = await axios.get('http://localhost:3000/api/posts/findAll')
         this.posts = response.data;
+        this.posts.forEach(post => {
+
+          let date = new Date(post.dataPost);
+          let day = String(date.getDate()).padStart(2, '0'); // Ensure two digits for day
+          let month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure two digits for month
+          let year = date.getFullYear();
+          post.dataPost = `${day}/${month}/${year}`;
+        });
       } catch (err) {
         await Swal.fire({
           icon: 'warning',
