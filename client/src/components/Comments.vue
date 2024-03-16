@@ -102,6 +102,7 @@ export default {
       const postId = parts[parts.length - 1];
       try {
         await axios.post('http://localhost:3000/api/comments/create', {texto: this.commentText, postId: postId, user: localStorage.getItem('username')})
+        window.location.reload()
         await Swal.fire({
           icon: 'success',
           title: 'Comment successfully posted!',
