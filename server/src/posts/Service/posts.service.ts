@@ -20,6 +20,7 @@ export class PostsService {
     post.titulo = createPostDto.titulo;
     post.texto = createPostDto.texto;
     post.dataPost = new Date();
+    post.numberOfComments = 0
 
     const user = await this.userRepository.findOne({where: {email: createPostDto.user}})
 
@@ -42,7 +43,11 @@ export class PostsService {
   }
 
   findOne(id: number) {
-    return this.postRepository.findOne({ where: {id} });
+    return this.postRepository.createQueryBuilder('post')
+        .leftJoinAndSelect('post.user', 'user') // Assuming 'user' is the name of the relation in the Post entity
+        .select(['post', 'user.username', 'user.email', /* other user attributes except password */])
+        .where({ id: id })
+        .getOne();
   }
 
 
@@ -55,6 +60,6 @@ export class PostsService {
 
 
     await this.postRepository.remove(post);
-    throw new HttpException('Exame deletado com sucesso!', HttpStatus.OK);
+    throw new HttpException('Post successfully deleted!', HttpStatus.OK);
   }
 }

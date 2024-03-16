@@ -28,13 +28,27 @@
       <v-col cols="8" v-for="post in posts" :key="post.id">
         <v-card hover elevation="8">
           <v-card-title>
-            <v-icon size="lg">mdi-account</v-icon>
-            {{ post.user.username }}
+            <v-row>
+              <v-col cols="11">
+                <v-icon size="lg">mdi-account</v-icon>
+                {{ post.user.username }}
+              </v-col>
+              <v-col cols="1">
+                <v-row>
+                  <v-col cols="5">
+                    <v-icon @click="comentarios(post.id)" size="md">mdi-comment</v-icon>
+                  </v-col>
+                  <v-col cols="7">
+                    <h6 class="font-italic">{{ post.numberOfComments }}</h6>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
           </v-card-title>
-          <v-card-subtitle>
+          <v-card-subtitle class="text-h6">
             {{ post.titulo }} - {{ post.dataPost }}
           </v-card-subtitle>
-          <v-card-text>
+          <v-card-text class="text-h5 pb-7">
             {{ post.texto }}
           </v-card-text>
         </v-card>
@@ -52,6 +66,7 @@
 <script>
 import axios from "axios";
 import Swal from "sweetalert2";
+import router from "@/routes";
 
 export default {
   name: "FeedPrincipal",
@@ -108,7 +123,11 @@ export default {
         title: 'Não foi possível criar seu post!',
         text: 'Tente novamente mais tarde!',
       });
-    }
+     }
+    },
+
+    async comentarios(postId){
+      await router.push(`/comments/${postId}`)
     }
   }
 }

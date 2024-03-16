@@ -1,8 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { PostsService } from '../Service/posts.service';
 import { CreatePostDto } from '../dto/create-post.dto';
-import { UpdatePostDto } from '../dto/update-post.dto';
-import {request} from "express";
+
 
 @Controller('posts')
 export class PostsController {
@@ -18,9 +17,9 @@ export class PostsController {
     return this.postsService.findAll();
   }
 
-  @Get(':id')
+  @Get('/findOne/:id')
   findOne(@Param('id') id: string) {
-    return this.postsService.findOne(+id);
+    return this.postsService.findOne(+id)
   }
 
   @Delete(':id')

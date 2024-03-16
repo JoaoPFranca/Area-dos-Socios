@@ -1,5 +1,6 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {UserEntity} from "../../user/Model/user.entity";
+import {Comment} from "../../comments/Model/comment.entity";
 
 @Entity("post")
 export class Post {
@@ -15,6 +16,12 @@ export class Post {
     @Column()
     dataPost: Date;
 
+    @Column()
+    numberOfComments: number;
+
     @ManyToOne(() => UserEntity, user => user.posts)
     user: UserEntity;
+
+    @OneToMany(() => Comment, comment => comment.post)
+    comments: Comment[];
 }
